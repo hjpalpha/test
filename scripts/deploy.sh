@@ -40,6 +40,7 @@ for luaFile in $luaFiles; do
 
     echo "...wiki = $wiki"
     echo "...page = $page"
+    echo "base url: ${WIKI_BASE_URL}"
     wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
     ckf="cookie_${wiki}.ck"
 
