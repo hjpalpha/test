@@ -3,7 +3,7 @@
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -A loggedin
-#declare -A allWikis
+declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
 
@@ -53,15 +53,11 @@ fetchAllWikis() {
 }
 
 checkForLocalVersion() {
-  echo "... wiki: ${2}"
   if [[ $2 == "commons" ]]; then
-    echo "...is commons"
     hasNoLocalVersion=false
   elif [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
-    echo "...file found"
     hasNoLocalVersion=false
   else
-    echo "...no file found"
     hasNoLocalVersion=true
   fi
 }
@@ -178,10 +174,8 @@ checkIfPageExists() {
   sleep 4
 
   if [[ $rawResult == *'missing'* ]]; then
-    echo "does not exist"
     pageExists=false
   else
-    echo "does exist"
     pageExists=true
   fi
 }
