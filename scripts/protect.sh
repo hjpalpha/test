@@ -171,12 +171,19 @@ for fileToProtect in $filesToProtect; do
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
 
+    echo "wiki to protect: ${WIKI_TO_PROTECT}"
     if [[ -z ${WIKI_TO_PROTECT} ]]; then
+      echo "... wtf1"
+    elif [[ -n ${WIKI_TO_PROTECT} ]]; then
+      echo "... wtf2"
+    fi
+
+    if [[ -n ${WIKI_TO_PROTECT} ]]; then
 
       if [[ $wiki == "commons" ]]; then
-        echo "... wtf1"
+        echo "... wtf2_1"
       elif [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
-        echo "... wtf2"
+        echo "... wtf2_2"
       fi
 
 
