@@ -176,7 +176,7 @@ checkIfPageExists() {
   # Don't get rate limited
   sleep 4
 
-  if [[ $rawResult == *'"missing":true'* ]]; then
+  if [[ $rawResult == *'missing'* ]]; then
     echo "does not exist"
     pageExists=false
   fi
