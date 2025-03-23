@@ -171,7 +171,10 @@ for fileToProtect in $filesToProtect; do
       if [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
         protectExistingPage $module ${WIKI_TO_PROTECT}
       elif [[ $wiki == "commons" ]]; then
-        protectNonExistingPage $module ${WIKI_TO_PROTECT}
+        checkForLocalVersion $module ${WIKI_TO_PROTECT}
+        if $hasNoLocalVersion; then
+          protectNonExistingPage $module ${WIKI_TO_PROTECT}
+        fi
       else
         echo "...no protection needed"
       fi
