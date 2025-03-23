@@ -230,7 +230,7 @@ if [[ ${#protectErrors[@]} -ne 0 ]]; then
   echo "::warning::Some modules could not be protected"
   for info in $protectErrors; do
     echo "::warning protection failed:: ${info}"
-    echo ":warning protection failed:: ${info}" >> $GITHUB_STEP_SUMMARY
+    echo ":warning protection failed: ${info}" >> $GITHUB_STEP_SUMMARY
   done
 fi
 
