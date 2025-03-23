@@ -12,11 +12,6 @@ regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 rawCreatedFiles=$1
 rawMovedFiles=$2
 
-echo "==created files=="
-echo $rawCreatedFiles
-echo "==moved files=="
-echo $rawMovedFiles
-
 if [[ -n "$rawCreatedFiles" ]] && [[ ${#rawCreatedFiles[@]} -ne 0 ]]; then
   createdFiles=$1
 fi
@@ -41,7 +36,7 @@ fi
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
 fetchAllWikis() {
-  data=$(
+  allWikis=$(
     curl \
       -s \
       -b "$ckf" \
@@ -54,8 +49,6 @@ fetchAllWikis() {
   )
   # Don't get rate limited
   sleep 4
-
-  return $data
 }
 
 hasNoLocalVersion() {
@@ -198,7 +191,7 @@ for fileToProtect in $filesToProtect; do
     else # commons case
       protectExistingPage $module $wiki
       if [[ -n $allWikis ]]; then
-        allWikis="$(fetchAllWikis)"
+        fetchAllWikis
       fi
       for deployWiki in $allWikis; do
         if hasNoLocalVersion $module $deployWiki; then
