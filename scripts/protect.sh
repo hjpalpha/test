@@ -171,12 +171,12 @@ for fileToProtect in $filesToProtect; do
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
 
-    if [[ "commons" != $wiki ]]; then
-      # if the file is on a wiki only protect on the wiki
-      # for wiki setups only apply if $wiki matches the wiki we are setting up
-      if [[ -z ${WIKI_TO_PROTECT} ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
-        protectExistingPage $module $wiki
+    if [[ -z ${WIKI_TO_PROTECT} ]]; then
+      if [[ $wiki == "commons" ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
+        protectExistingPage $module ${WIKI_TO_PROTECT}
       fi
+    elif [[ "commons" != $wiki ]]; then
+      protectExistingPage $module $wiki
     else # commons case
       protectExistingPage $module $wiki
       if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
