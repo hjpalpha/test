@@ -174,7 +174,7 @@ for fileToProtect in $filesToProtect; do
     if [[ "commons" != $wiki ]]; then
       # if the file is on a wiki only protect on the wiki
       # for wiki setups only apply if $wiki matches the wiki we are setting up
-      if [[ -n ${WIKI_TO_PROTECT} ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
+      if [[ -z ${WIKI_TO_PROTECT} ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
         protectExistingPage $module $wiki
       fi
     else # commons case
