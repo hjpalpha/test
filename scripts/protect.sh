@@ -7,6 +7,8 @@ declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
 
+regex="lua/wikis/([a-z]+)/(.*)\.lua"
+
 rawCreatedFiles=$1
 rawMovedFiles=$2
 
@@ -37,8 +39,6 @@ else
 fi
 
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
-
-regex="^\.?/?lua/wikis/([a-z]+)/(.*)\.lua$"
 
 fetchAllWikis() {
   data=$(
