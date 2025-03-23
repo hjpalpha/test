@@ -6,6 +6,7 @@ declare -A loggedin
 declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
+protectErrors=()
 
 regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
@@ -123,8 +124,8 @@ protectPage() {
   result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${4}" -r)
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2 against creation"
-    #protectErrors+=("$1 on $2")
-    protectErrors=(${protectErrors[@]} ("$1 on $2"))
+    protectErrors+=("$1 on $2")
+    #protectErrors=(${protectErrors[@]} ("$1 on $2"))
     echo "${protectErrors}"
   fi
 }
