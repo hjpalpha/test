@@ -153,6 +153,7 @@ protectPage() {
       -X POST "${wikiApiUrl}?format=json&action=protect" \
       | gunzip
   )
+  echo $rawResult
   # Don't get rate limited
   sleep 4
 
@@ -190,9 +191,6 @@ for fileToProtect in $filesToProtect; do
   if [[ $fileToProtect =~ $regex ]]; then
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
-
-    echo "wiki: $wiki"
-    echo "module: $module"
 
     if [[ "commons" -ne $wiki ]]; then
       # if the file is on a wiki only protect on the wiki
