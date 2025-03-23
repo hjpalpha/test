@@ -42,6 +42,7 @@ for luaFile in $luaFiles; do
     echo "...page = $page"
     echo "base url: ${WIKI_BASE_URL}"
     wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
+    echo $wikiApiUrl
     ckf="cookie_${wiki}.ck"
 
     if [[ ${loggedin[${wiki}]} != 1 ]]; then
