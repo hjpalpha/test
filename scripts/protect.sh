@@ -16,9 +16,11 @@ echo $filesToProtect
 
 if [[ -z "$filesToProtect" ]]; then
   echo "here1"
-elif [[ -n "$filesToProtect" ]]; then
+fi
+if [[ -n "$filesToProtect" ]]; then
   echo "here2"
-elif [[ ${#filesToProtect[@]} == 0 ]]; then
+fi
+if [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "here3"
 fi
 
