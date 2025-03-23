@@ -65,24 +65,6 @@ hasNoLocalVersion() {
   return true
 }
 
-protectExistingPage() {
-  rawResult=protectPage $1 $2 "edit=allow-only-sysop|move=allow-only-sysop"
-  result=$(echo "$rawResult" | jq ".protect.protections.[].edit" -r)
-  if [[ $result != *"allow-only-sysop"* ]]; then
-    echo "::warning::could not protect $1 on $2 against editing"
-    protectErrors+=("$1 on $2")
-  fi
-}
-
-protectNonExistingPage() {
-  rawResult=protectPage $1 $2 "create=allow-only-sysop"
-  result=$(echo "$rawResult" | jq ".protect.protections.[].create" -r)
-  if [[ $result != *"allow-only-sysop"* ]]; then
-    echo "::warning::could not protect $1 on $2 against creation"
-    protectErrors+=("$1 on $2")
-  fi
-}
-
 protectPage() {
   protectOptions=$3
   wiki=$2
@@ -158,6 +140,24 @@ protectPage() {
   sleep 4
 
   return $rawResult
+}
+
+protectExistingPage() {
+  rawResult=protectPage $1 $2 "edit=allow-only-sysop|move=allow-only-sysop"
+  result=$(echo "$rawResult" | jq ".protect.protections.[].edit" -r)
+  if [[ $result != *"allow-only-sysop"* ]]; then
+    echo "::warning::could not protect $1 on $2 against editing"
+    protectErrors+=("$1 on $2")
+  fi
+}
+
+protectNonExistingPage() {
+  rawResult=protectPage $1 $2 "create=allow-only-sysop"
+  result=$(echo "$rawResult" | jq ".protect.protections.[].create" -r)
+  if [[ $result != *"allow-only-sysop"* ]]; then
+    echo "::warning::could not protect $1 on $2 against creation"
+    protectErrors+=("$1 on $2")
+  fi
 }
 
 pageExists() {
