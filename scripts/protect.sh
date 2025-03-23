@@ -10,7 +10,9 @@ declare -A protectErrors
 rawCreatedFiles=$1
 rawMovedFiles=$2
 
+echo "==created files=="
 echo $rawCreatedFiles
+echo "==moved files=="
 echo $rawMovedFiles
 
 if [[ -n "$rawCreatedFiles" ]] && [[ ${#rawCreatedFiles[@]} -ne 0 ]]; then
@@ -36,7 +38,7 @@ fi
 
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
-regex="^\.?/lua/wikis/([a-z]+)/(.*)\.lua$"
+regex="^\.?/?lua/wikis/([a-z]+)/(.*)\.lua$"
 
 fetchAllWikis() {
   data=$(
@@ -236,3 +238,8 @@ if [[ ${#protectErrors[@]} -ne 0 ]]; then
 fi
 
 rm -f cookie_*
+
+if [[ ${#protectErrors[@]} -ne 0 ]] || [[ ${#regexErrors[@]} -ne 0 ]]; then
+  exit 1
+fi
+
