@@ -218,7 +218,7 @@ if [[ ${#protectErrors[@]} -ne 0 ]]; then
   echo "::warning::Some modules could not be protected"
   echo "::group::Failed protections"
   for value in "${protectErrors[@]}"; do
-     echo "... $value"
+     echo "... ${value}"
   done
   echo "::endgroup::"
 fi
