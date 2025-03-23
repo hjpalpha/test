@@ -23,9 +23,9 @@ fi
 
 if [[ -n "$createdFiles" ]] && [[ -n "$movedFiles" ]]; then
   filesToProtect=( "${createdFiles[@]}" "${movedFiles[@]}" )
-elif [[ -n "$createdFiles" ]]
+elif [[ -n "$createdFiles" ]]; then
   filesToProtect=$createdFiles
-elif [[ -n "$movedFiles" ]]
+elif [[ -n "$movedFiles" ]]; then
   filesToProtect=$movedFiles
 elif [[ -n ${WIKI_TO_PROTECT} ]]; then
   filesToProtect=$(find lua -type f -name '*/wikis/*.lua')
