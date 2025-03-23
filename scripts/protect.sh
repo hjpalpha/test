@@ -223,7 +223,7 @@ if [[ ${#regexErrors[@]} -ne 0 ]]; then
   for failedRegex in $regexErrors; do
     echo "::warning failed regex:: ${failedRegex}"
     echo ":warning: ${failedRegex} failed regex" >> $GITHUB_STEP_SUMMARY
-  fi
+  done
 fi
 
 if [[ ${#protectErrors[@]} -ne 0 ]]; then
