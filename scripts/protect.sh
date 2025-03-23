@@ -53,15 +53,17 @@ fetchAllWikis() {
 
 }
 
-hasNoLocalVersion() {
+checkForLocalVersion() {
+  echo "... wiki: ${2}"
   if [[ $2 == "commons" ]]; then
-    return 0
+    echo "...is commons"
+    hasNoLocalVersion=false
+  elif [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
+    echo "...file found"
+    hasNoLocalVersion=false
   fi
-
-  if [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
-    return 0
-  fi
-  return 1
+  echo "...no file found"
+  hasNoLocalVersion=true
 }
 
 protectPage() {
@@ -156,6 +158,7 @@ protectNonExistingPage() {
   fi
 }
 
+checkIfPageExists
 pageExists() {
   wiki=$2
   page="Module:${1}"
@@ -177,9 +180,9 @@ pageExists() {
   sleep 4
 
   if [[ $rawResult == *'"missing":true'* ]]; then
-    return 0
+    pageExists=false
   fi
-  return 1
+  pageExists=true
 }
 
 for fileToProtect in $filesToProtect; do
@@ -199,10 +202,15 @@ for fileToProtect in $filesToProtect; do
       if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
         fetchAllWikis
       fi
+      echo "all wikis"
+      echo $allWikis
+      echo "====="
       for deployWiki in $allWikis; do
-        if hasNoLocalVersion $module $deployWiki; then
+        checkForLocalVersion $module $deployWiki
+        if hasNoLocalVersion; then
           echo "...protecting ${module} against creation on ${deployWiki}"
-          if pageExists $module $deployWiki; then
+          checkIfPageExists $module $deployWiki
+          if pageExists; then
             echo "::warning::$fileToProtect already exists on $deployWiki"
             protectErrors+=("$fileToProtect on $deployWiki")
           else
