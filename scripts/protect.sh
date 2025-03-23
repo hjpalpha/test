@@ -14,7 +14,7 @@ filesToProtect=$1
 echo "::group::AAA"
 echo $filesToProtect
 
-if [[ ${#filesToProtect[@]} == 0 ]]
+if [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "here"
 fi
 
