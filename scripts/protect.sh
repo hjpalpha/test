@@ -190,10 +190,11 @@ for fileToProtect in $filesToProtect; do
       fi
     else # commons case
       protectExistingPage $module $wiki
-      if [[ -n $allWikis ]]; then
+      if [[ -n $allWikis ]] && [[ ${#allWikis[@]} -ne 0 ]]; then
         fetchAllWikis
       fi
       for deployWiki in $allWikis; do
+        echo "...protecting against creation on ${deployWiki}"
         if hasNoLocalVersion $module $deployWiki; then
           if pageExists $module $deployWiki; then
             echo "::warning::$fileToProtect already exists on $deployWiki"
