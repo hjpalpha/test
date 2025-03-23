@@ -46,11 +46,12 @@ fetchAllWikis() {
       -H 'Accept-Encoding: gzip' \
       -X GET "https://liquipedia.net/api.php?action=listwikis" \
       | gunzip \
-      | jq '.allWikis | keys[]' -r
+      | jq '.allwikis | keys[]' -r
   )
   echo $allWikis
   # Don't get rate limited
   sleep 4
+
 }
 
 hasNoLocalVersion() {
