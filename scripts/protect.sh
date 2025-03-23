@@ -190,10 +190,12 @@ for fileToProtect in $filesToProtect; do
       fi
     else # commons case
       protectExistingPage $module $wiki
-      if [[ -n $allWikis ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
+      echo "...here1"
+      if [[ ${#allWikis[@]} -ne 0 ]]; then
+        echo "...here2"
         fetchAllWikis
       fi
-      echo $allWikis
+      echo "...${allWikis}"
       for deployWiki in $allWikis; do
         echo "...protecting against creation on ${deployWiki}"
         if hasNoLocalVersion $module $deployWiki; then
