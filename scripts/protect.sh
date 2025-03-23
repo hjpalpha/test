@@ -123,7 +123,8 @@ protectPage() {
   result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${4}" -r)
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2 against creation"
-    protectErrors+=("$1 on $2")
+    protectErrorMsg="${1} on ${2}"
+    protectErrors+=("${protectErrorMsg}")
   fi
 }
 
