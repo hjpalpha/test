@@ -36,21 +36,17 @@ fi
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
 fetchAllWikis() {
-  #allWikis=$(
-  #  curl \
-  #    -s \
-  #    -b "$ckf" \
-  #    -c "$ckf" \
-  #    -H "User-Agent: ${userAgent}" \
-  #    -H 'Accept-Encoding: gzip' \
-  #    -X GET "https://liquipedia.net/api.php?action=listwikis" \
-  #    | gunzip \
-  #    | jq '.allwikis | keys[]' -r
-  #)
-  allWikis=("dota2" "starcraft2" "commons") # for testing ...
-    echo "all wikis"
-        echo $allWikis
-        echo "====="
+  allWikis=$(
+    curl \
+      -s \
+      -b "$ckf" \
+      -c "$ckf" \
+      -H "User-Agent: ${userAgent}" \
+      -H 'Accept-Encoding: gzip' \
+      -X GET "https://liquipedia.net/api.php?action=listwikis" \
+      | gunzip \
+      | jq '.allwikis | keys[]' -r
+  )
   # Don't get rate limited
   sleep 4
 
@@ -188,7 +184,7 @@ checkIfPageExists() {
 }
 
 for fileToProtect in $filesToProtect; do
-  echo "::group::Checking $fileToProtect"
+  echo "::group::Trying to protect for $fileToProtect"
   if [[ $fileToProtect =~ $regex ]]; then
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
@@ -209,10 +205,10 @@ for fileToProtect in $filesToProtect; do
       fi
       for deployWiki in $allWikis; do
         checkForLocalVersion $module $deployWiki
-        if hasNoLocalVersion; then
+        if $hasNoLocalVersion; then
           echo "...protecting ${module} against creation on ${deployWiki}"
           checkIfPageExists $module $deployWiki
-          if pageExists; then
+          if $pageExists; then
             echo "::warning::$fileToProtect already exists on $deployWiki"
             protectErrors+=("$fileToProtect on $deployWiki")
           else
