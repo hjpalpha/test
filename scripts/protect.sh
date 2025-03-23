@@ -13,11 +13,11 @@ rawCreatedFiles=$1
 rawMovedFiles=$2
 
 if [[ -n "$rawCreatedFiles" ]] && [[ ${#rawCreatedFiles[@]} -ne 0 ]]; then
-  createdFiles=$1
+  createdFiles=$rawCreatedFiles
 fi
 
 if [[ -n "$rawMovedFiles" ]] && [[ ${#rawMovedFiles[@]} -ne 0 ]]; then
-  movedFiles=$2
+  movedFiles=$rawMovedFiles
 fi
 
 if [[ -n "$createdFiles" ]] && [[ -n "$movedFiles" ]]; then
@@ -194,7 +194,7 @@ for fileToProtect in $filesToProtect; do
       protectExistingPage $module $wiki
       echo "...here1"
       echo "...${allWikis}"
-      if [[ ${#allWikis[@]} -ne 0 ]]; then
+      if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
         echo "...here2"
         fetchAllWikis
       fi
