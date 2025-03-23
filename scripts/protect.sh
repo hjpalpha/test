@@ -167,7 +167,6 @@ checkIfPageExists() {
       -c "$ckf" \
       --data-urlencode "titles=${page}" \
       --data-urlencode "prop=info" \
-      --data-urlencode "token=${protectToken}" \
       -H "User-Agent: ${userAgent}" \
       -H 'Accept-Encoding: gzip' \
       -X POST "${wikiApiUrl}?format=json&action=query" \
@@ -199,9 +198,6 @@ for fileToProtect in $filesToProtect; do
       protectExistingPage $module $wiki
       if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
         fetchAllWikis
-        echo "all wikis"
-        echo $allWikis
-        echo "====="
       fi
       for deployWiki in $allWikis; do
         checkForLocalVersion $module $deployWiki
@@ -214,6 +210,7 @@ for fileToProtect in $filesToProtect; do
           else
             protectNonExistingPage $module $deployWiki
           fi
+          exit 1 # for testing
         fi
       done
     fi
