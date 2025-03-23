@@ -11,14 +11,16 @@ regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
 filesToProtect=$1
 
+allLuaFiles=$(find lua -type f -name '*.lua')
+
 echo "::group::AAA"
 echo $filesToProtect
 
 if [[ -n "$filesToProtect" ]] && [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "Protecting created and moved files during deploy"
 elif [[ -n ${WIKI_TO_PROTECT} ]]; then
-  #modulesPattern="*wikis"
-  filesToProtect=$(find lua -type f -name 'lua/wikis/*.lua')
+  modulesPattern="*lua/wikis/*"
+  filesToProtect=${(M)allLuaFiles:#$~modulesPattern}
 else
   echo "Nothing to protect"
   exit 0
@@ -29,7 +31,6 @@ echo '::endgroup::'
 
 exit 1
 
-luaFiles=$(find lua -type f -name '*.lua')
 
 fetchAllWikis() {
   allWikis=$(
@@ -51,7 +52,7 @@ fetchAllWikis() {
 checkForLocalVersion() {
   if [[ $2 == "commons" ]]; then
     hasNoLocalVersion=false
-  elif [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
+  elif [[ $allLuaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
     hasNoLocalVersion=false
   else
     hasNoLocalVersion=true
