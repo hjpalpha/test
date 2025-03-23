@@ -187,10 +187,12 @@ pageExists() {
 
 for fileToProtect in $filesToProtect; do
   echo "::group::Checking $fileToProtect"
-  echo $regex
   if [[ $fileToProtect =~ $regex ]]; then
     module=${BASH_REMATCH[1]}
     wiki=${BASH_REMATCH[2]}
+
+    echo "wiki: $wiki"
+    echo "module: $module"
 
     if [[ "commons" -ne $wiki ]]; then
       # if the file is on a wiki only protect on the wiki
