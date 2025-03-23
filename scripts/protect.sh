@@ -9,17 +9,8 @@ declare -A protectErrors
 
 regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
-filesToProtect=$1
-
-echo "::group::AAA"
-echo $filesToProtect
-
-if [[ ${#filesToProtect[@]} == 0 ]]; then
-  echo "here"
-fi
-
-if [[ -n "$filesToProtect" ]] && [[ ${#filesToProtect[@]} == 0 ]]; then
-  echo "Protecting created and moved files during deploy"
+if [[ -n "$1" ]] then
+  filesToProtect=$1
 elif [[ -n ${WIKI_TO_PROTECT} ]]; then
   filesToProtect=$(find lua/wikis -type f -name '*.lua')
 else
@@ -27,13 +18,7 @@ else
   exit 0
 fi
 
-echo $filesToProtect
-echo '::endgroup::'
-
-exit 1
-
 allLuaFiles=$(find lua -type f -name '*.lua')
-
 
 fetchAllWikis() {
   allWikis=$(
