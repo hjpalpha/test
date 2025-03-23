@@ -231,7 +231,7 @@ if [[ ${#protectErrors[@]} -ne 0 ]]; then
   for info in $protectErrors; do
     echo "::warning protection failed:: ${info}"
     echo ":warning protection failed:: ${info}" >> $GITHUB_STEP_SUMMARY
-  fi
+  done
 fi
 
 rm -f cookie_*
