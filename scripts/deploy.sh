@@ -48,21 +48,6 @@ for luaFile in $luaFiles; do
     if [[ ${loggedin[${wiki}]} != 1 ]]; then
       # Login
       echo "...logging in on \"${wiki}\""
-      rawLoginToken=$(
-        curl \
-          -s \
-          -b "$ckf" \
-          -c "$ckf" \
-          -d "format=json&action=query&meta=tokens&type=login" \
-          -H "User-Agent: ${userAgent}" \
-          -H 'Accept-Encoding: gzip' \
-          -X POST "$wikiApiUrl" \
-          | gunzip
-      )
-      echo "here0"
-      echo $rawLoginToken
-      # Don't get rate limited
-      sleep 4
       loginToken=$(
         curl \
           -s \
@@ -75,7 +60,6 @@ for luaFile in $luaFiles; do
           | gunzip \
           | jq ".query.tokens.logintoken" -r
       )
-      echo "here1"
       curl \
         -s \
         -b "$ckf" \
@@ -94,7 +78,6 @@ for luaFile in $luaFiles; do
     fi
 
     # Edit page
-    echo "here2"
     editToken=$(
       curl \
         -s \
@@ -107,7 +90,7 @@ for luaFile in $luaFiles; do
         | gunzip \
         | jq ".query.tokens.csrftoken" -r
     )
-    echo "here3"
+    echo "$editToken"
     rawResult=$(
       curl \
         -s \
@@ -124,7 +107,7 @@ for luaFile in $luaFiles; do
         -X POST "${wikiApiUrl}?format=json&action=edit" \
         | gunzip
     )
-    echo "here4"
+    echo "$rawResult"
     result=$(echo "$rawResult" | jq ".edit.result" -r)
     if [[ "${result}" == "Success" ]]; then
       nochange=$(echo "$rawResult" | jq ".edit.nochange" -r)
