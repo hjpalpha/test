@@ -7,11 +7,17 @@ declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
 
-if [[ -n "$1" ]] && [[ ${#1[@]} -ne 0 ]]; then
+rawCreatedFiles=$1
+rawMovedFiles=$2
+
+echo $rawCreatedFiles
+echo $rawMovedFiles
+
+if [[ -n "$rawCreatedFiles" ]] && [[ ${#rawCreatedFiles[@]} -ne 0 ]]; then
   createdFiles=$1
 fi
 
-if [[ -n "$2" ]] && [[ ${#2[@]} -ne 0 ]]; then
+if [[ -n "$rawMovedFiles" ]] && [[ ${#rawMovedFiles[@]} -ne 0 ]]; then
   movedFiles=$2
 fi
 
@@ -45,7 +51,7 @@ fetchAllWikis() {
       | jq '.allwikis | keys[]' -r
   )
   # Don't get rate limited
-  sleep 30
+  sleep 4
 
   return $data
 }
@@ -113,7 +119,7 @@ protectPage() {
       > /dev/null
     loggedin[$wiki]=1
     # Don't get rate limited
-    sleep 30
+    sleep 4
   fi
 
   # Protect Page
@@ -146,7 +152,7 @@ protectPage() {
       | gunzip
   )
   # Don't get rate limited
-  sleep 30
+  sleep 4
 
   return $rawResult
 }
@@ -169,7 +175,7 @@ pageExists() {
   )
 
   # Don't get rate limited
-  sleep 30
+  sleep 4
 
   if [[ $rawResult == *'"missing":true'* ]]; then
     return false
