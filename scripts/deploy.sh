@@ -46,6 +46,21 @@ for luaFile in $luaFiles; do
     if [[ ${loggedin[${wiki}]} != 1 ]]; then
       # Login
       echo "...logging in on \"${wiki}\""
+      rawLoginToken=$(
+        curl \
+          -s \
+          -b "$ckf" \
+          -c "$ckf" \
+          -d "format=json&action=query&meta=tokens&type=login" \
+          -H "User-Agent: ${userAgent}" \
+          -H 'Accept-Encoding: gzip' \
+          -X POST "$wikiApiUrl" \
+          | gunzip
+      )
+      echo "here0"
+      echo $rawLoginToken
+      # Don't get rate limited
+      sleep 4
       loginToken=$(
         curl \
           -s \
