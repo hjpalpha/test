@@ -158,8 +158,8 @@ protectNonExistingPage() {
 }
 
 checkIfPageExists() {
-  wiki=$2
   page="Module:${1}"
+  wikiApiUrl="${WIKI_BASE_URL}/${2}/api.php"
   rawResult=$(
     curl \
       -s \
@@ -177,6 +177,7 @@ checkIfPageExists() {
   sleep 4
 
   if [[ $rawResult == *'"missing":true'* ]]; then
+    echo "does not exist"
     pageExists=false
   fi
   pageExists=true
