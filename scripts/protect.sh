@@ -45,7 +45,7 @@ fetchAllWikis() {
       -H 'Accept-Encoding: gzip' \
       -X GET "https://liquipedia.net/api.php?action=listwikis" \
       | gunzip \
-      | jq '.allwikis | keys[]' -r
+      | jq '.allWikis | keys[]' -r
   )
   # Don't get rate limited
   sleep 4
@@ -190,9 +190,10 @@ for fileToProtect in $filesToProtect; do
       fi
     else # commons case
       protectExistingPage $module $wiki
-      if [[ -n $allWikis ]] && [[ ${#allWikis[@]} -ne 0 ]]; then
+      if [[ -n $allWikis ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
         fetchAllWikis
       fi
+      echo $allWikis
       for deployWiki in $allWikis; do
         echo "...protecting against creation on ${deployWiki}"
         if hasNoLocalVersion $module $deployWiki; then
