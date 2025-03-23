@@ -180,6 +180,8 @@ checkIfPageExists() {
     echo "does not exist"
     pageExists=false
   fi
+  echo "does exist"
+  echo $rawResult
   pageExists=true
 }
 
@@ -211,7 +213,6 @@ for fileToProtect in $filesToProtect; do
           else
             protectNonExistingPage $module $deployWiki
           fi
-          exit 1 # for testing
         fi
       done
     fi
