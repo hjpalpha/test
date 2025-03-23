@@ -45,7 +45,7 @@ fetchAllWikis() {
       | jq '.allwikis | keys[]' -r
   )
   # Don't get rate limited
-  sleep 4
+  sleep 30
 
   return $data
 }
@@ -113,7 +113,7 @@ protectPage() {
       > /dev/null
     loggedin[$wiki]=1
     # Don't get rate limited
-    sleep 4
+    sleep 30
   fi
 
   # Protect Page
@@ -146,7 +146,7 @@ protectPage() {
       | gunzip
   )
   # Don't get rate limited
-  sleep 4
+  sleep 30
 
   return $rawResult
 }
@@ -169,7 +169,7 @@ pageExists() {
   )
 
   # Don't get rate limited
-  sleep 4
+  sleep 30
 
   if [[ $rawResult == *'"missing":true'* ]]; then
     return false
