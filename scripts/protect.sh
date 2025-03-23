@@ -36,6 +36,7 @@ fi
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
 fetchAllWikis() {
+  echo "...here3"
   allWikis=$(
     curl \
       -s \
@@ -47,6 +48,7 @@ fetchAllWikis() {
       | gunzip \
       | jq '.allWikis | keys[]' -r
   )
+  echo $allWikis
   # Don't get rate limited
   sleep 4
 }
@@ -191,6 +193,7 @@ for fileToProtect in $filesToProtect; do
     else # commons case
       protectExistingPage $module $wiki
       echo "...here1"
+      echo "...${allWikis}"
       if [[ ${#allWikis[@]} -ne 0 ]]; then
         echo "...here2"
         fetchAllWikis
