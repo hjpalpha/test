@@ -172,6 +172,15 @@ for fileToProtect in $filesToProtect; do
     module=${BASH_REMATCH[2]}
 
     if [[ -z ${WIKI_TO_PROTECT} ]]; then
+
+      if [[ $wiki == "commons" ]]; then
+        echo "... wtf1"
+      elif [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
+        echo "... wtf2"
+      fi
+
+
+
       if [[ $wiki == "commons" ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
         protectExistingPage $module ${WIKI_TO_PROTECT}
       else
