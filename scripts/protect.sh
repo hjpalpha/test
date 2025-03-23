@@ -48,6 +48,9 @@ fetchAllWikis() {
       | jq '.allwikis | keys[]' -r
   )
   allWikis=("dota2" "starcraft2" "commons") # for testing ...
+    echo "all wikis"
+        echo $allWikis
+        echo "====="
   # Don't get rate limited
   sleep 4
 
@@ -158,8 +161,7 @@ protectNonExistingPage() {
   fi
 }
 
-checkIfPageExists
-pageExists() {
+checkIfPageExists() {
   wiki=$2
   page="Module:${1}"
   rawResult=$(
@@ -201,10 +203,10 @@ for fileToProtect in $filesToProtect; do
       protectExistingPage $module $wiki
       if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
         fetchAllWikis
+        echo "all wikis"
+        echo $allWikis
+        echo "====="
       fi
-      echo "all wikis"
-      echo $allWikis
-      echo "====="
       for deployWiki in $allWikis; do
         checkForLocalVersion $module $deployWiki
         if hasNoLocalVersion; then
