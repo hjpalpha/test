@@ -14,10 +14,14 @@ filesToProtect=$1
 echo "::group::AAA"
 echo $filesToProtect
 
+if [[ ${#filesToProtect[@]} == 0 ]]
+  echo "here"
+fi
+
 if [[ -n "$filesToProtect" ]] && [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "Protecting created and moved files during deploy"
 elif [[ -n ${WIKI_TO_PROTECT} ]]; then
-  filesToProtect=$(find /lua/wikis -type f -name '*.lua')
+  filesToProtect=$(find lua/wikis -type f -name '*.lua')
 else
   echo "Nothing to protect"
   exit 0
