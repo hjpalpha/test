@@ -60,7 +60,7 @@ for luaFile in $luaFiles; do
           | gunzip \
           | jq ".query.tokens.logintoken" -r
       )
-      curl \
+      logon=$(curl \
         -s \
         -b "$ckf" \
         -c "$ckf" \
@@ -70,8 +70,9 @@ for luaFile in $luaFiles; do
         -H "User-Agent: ${userAgent}" \
         -H 'Accept-Encoding: gzip' \
         -X POST "${wikiApiUrl}?format=json&action=login" \
-        | gunzip \
-        > /dev/null
+        | gunzip
+      )
+      echo $logon
       loggedin[$wiki]=1
       # Don't get rate limited
       sleep 4
