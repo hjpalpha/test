@@ -17,7 +17,7 @@ echo $filesToProtect
 if [[ -n "$filesToProtect" ]] && [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "Protecting created and moved files during deploy"
 elif [[ -n ${WIKI_TO_PROTECT} ]]; then
-  filesToProtect=$(find lua -type f -name './lua/wikis/*.lua')
+  filesToProtect=$(find lua -type f -name '*.lua')
 else
   echo "Nothing to protect"
   exit 0
@@ -28,7 +28,7 @@ echo '::endgroup::'
 
 exit 1
 
-luaFiles=$(find lua -type f -name '*/wikis/*.lua')
+luaFiles=$(find lua -type f -name '*.lua')
 
 fetchAllWikis() {
   allWikis=$(
