@@ -56,9 +56,9 @@ fetchAllWikis() {
 
 hasNoLocalVersion() {
   if [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
-    return false
+    return 0
   fi
-  return true
+  return 1
 }
 
 protectPage() {
@@ -174,9 +174,9 @@ pageExists() {
   sleep 4
 
   if [[ $rawResult == *'"missing":true'* ]]; then
-    return false
+    return 0
   fi
-  return true
+  return 1
 }
 
 for fileToProtect in $filesToProtect; do
