@@ -40,9 +40,7 @@ for luaFile in $luaFiles; do
 
     echo "...wiki = $wiki"
     echo "...page = $page"
-    echo "base url: ${WIKI_BASE_URL}"
     wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
-    echo $wikiApiUrl
     ckf="cookie_${wiki}.ck"
 
     if [[ ${loggedin[${wiki}]} != 1 ]]; then
@@ -60,7 +58,7 @@ for luaFile in $luaFiles; do
           | gunzip \
           | jq ".query.tokens.logintoken" -r
       )
-      logon=$(curl \
+      curl \
         -s \
         -b "$ckf" \
         -c "$ckf" \
@@ -70,9 +68,8 @@ for luaFile in $luaFiles; do
         -H "User-Agent: ${userAgent}" \
         -H 'Accept-Encoding: gzip' \
         -X POST "${wikiApiUrl}?format=json&action=login" \
-        | gunzip
-      )
-      echo $logon
+        | gunzip \
+        > /dev/null
       loggedin[$wiki]=1
       # Don't get rate limited
       sleep 4
@@ -91,7 +88,6 @@ for luaFile in $luaFiles; do
         | gunzip \
         | jq ".query.tokens.csrftoken" -r
     )
-    echo "$editToken"
     rawResult=$(
       curl \
         -s \
@@ -108,7 +104,6 @@ for luaFile in $luaFiles; do
         -X POST "${wikiApiUrl}?format=json&action=edit" \
         | gunzip
     )
-    echo "$rawResult"
     result=$(echo "$rawResult" | jq ".edit.result" -r)
     if [[ "${result}" == "Success" ]]; then
       nochange=$(echo "$rawResult" | jq ".edit.nochange" -r)
