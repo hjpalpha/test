@@ -58,6 +58,7 @@ for luaFile in $luaFiles; do
           | gunzip \
           | jq ".query.tokens.logintoken" -r
       )
+      echo "here1"
       curl \
         -s \
         -b "$ckf" \
@@ -76,6 +77,7 @@ for luaFile in $luaFiles; do
     fi
 
     # Edit page
+    echo "here2"
     editToken=$(
       curl \
         -s \
@@ -88,6 +90,7 @@ for luaFile in $luaFiles; do
         | gunzip \
         | jq ".query.tokens.csrftoken" -r
     )
+    echo "here3"
     rawResult=$(
       curl \
         -s \
@@ -104,6 +107,7 @@ for luaFile in $luaFiles; do
         -X POST "${wikiApiUrl}?format=json&action=edit" \
         | gunzip
     )
+    echo "here4"
     result=$(echo "$rawResult" | jq ".edit.result" -r)
     if [[ "${result}" == "Success" ]]; then
       nochange=$(echo "$rawResult" | jq ".edit.nochange" -r)
