@@ -4,9 +4,8 @@ userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -A loggedin
 declare -A allWikis
-declare -A regexErrors
-declare -A protectErrors
-protectErrors=()
+declare -A regexErrors=()
+declare -A protectErrors=()
 
 regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
