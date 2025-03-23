@@ -184,7 +184,8 @@ pageExists() {
 }
 
 for fileToProtect in $filesToProtect; do
-  echo "::group::Checking $luaFile"
+  echo "::group::Checking $fileToProtect"
+  echo $regex
   if [[ $fileToProtect =~ $regex ]]; then
     module=${BASH_REMATCH[1]}
     wiki=${BASH_REMATCH[2]}
