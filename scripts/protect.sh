@@ -10,7 +10,19 @@ declare -A protectErrors
 regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
 filesToProtect=$1
-rawMovedFiles=$2
+
+echo "::group::AAA"
+echo $filesToProtect
+
+if [[ -z "$filesToProtect" ]]; then
+  echo "here1"
+elif [[ -n "$filesToProtect" ]]; then
+  echo "here2"
+elif [[ ${#filesToProtect[@]} == 0 ]]; then
+  echo "here3"
+fi
+
+
 
 if [[ -z "$filesToProtect" ]] && [[ -n "$filesToProtect" ]] && [[ ${#filesToProtect[@]} == 0 ]]; then
   echo "Protecting created and moved files during deploy"
@@ -22,6 +34,7 @@ else
 fi
 
 echo $filesToProtect
+echo '::endgroup::'
 
 exit 1
 
