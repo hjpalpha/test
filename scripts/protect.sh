@@ -3,7 +3,7 @@
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -A loggedin
-declare -A allWikis
+#declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
 
@@ -36,17 +36,17 @@ fi
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
 fetchAllWikis() {
-  allWikis=$(
-    curl \
-      -s \
-      -b "$ckf" \
-      -c "$ckf" \
-      -H "User-Agent: ${userAgent}" \
-      -H 'Accept-Encoding: gzip' \
-      -X GET "https://liquipedia.net/api.php?action=listwikis" \
-      | gunzip \
-      | jq '.allwikis | keys[]' -r
-  )
+  #allWikis=$(
+  #  curl \
+  #    -s \
+  #    -b "$ckf" \
+  #    -c "$ckf" \
+  #    -H "User-Agent: ${userAgent}" \
+  #    -H 'Accept-Encoding: gzip' \
+  #    -X GET "https://liquipedia.net/api.php?action=listwikis" \
+  #    | gunzip \
+  #    | jq '.allwikis | keys[]' -r
+  #)
   allWikis=("dota2" "starcraft2" "commons") # for testing ...
     echo "all wikis"
         echo $allWikis
