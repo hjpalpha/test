@@ -119,24 +119,20 @@ protectPage() {
   )
   # Don't get rate limited
   sleep 4
-}
 
-protectExistingPage() {
-  protectPage $1 $2 "edit=allow-only-sysop|move=allow-only-sysop"
-  result=$(echo "$rawProtectResult" | jq ".protect.protections.[].edit" -r)
-  if [[ $result != *"allow-only-sysop"* ]]; then
-    echo "::warning::could not protect $1 on $2 against editing"
-    protectErrors+=("$1 on $2")
-  fi
-}
-
-protectNonExistingPage() {
-  protectPage $1 $2 "create=allow-only-sysop"
-  result=$(echo "$rawProtectResult" | jq ".protect.protections.[].create" -r)
+  result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${4}" -r)
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2 against creation"
     protectErrors+=("$1 on $2")
   fi
+}
+
+protectExistingPage() {
+  protectPage $1 $2 "edit=allow-only-sysop|move=allow-only-sysop" "edit"
+}
+
+protectNonExistingPage() {
+  protectPage $1 $2 "create=allow-only-sysop" "create"
 }
 
 checkIfPageExists() {
