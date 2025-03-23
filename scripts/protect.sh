@@ -60,9 +60,10 @@ checkForLocalVersion() {
   elif [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
     echo "...file found"
     hasNoLocalVersion=false
+  else
+    echo "...no file found"
+    hasNoLocalVersion=true
   fi
-  echo "...no file found"
-  hasNoLocalVersion=true
 }
 
 protectPage() {
@@ -179,10 +180,10 @@ checkIfPageExists() {
   if [[ $rawResult == *'missing'* ]]; then
     echo "does not exist"
     pageExists=false
+  else
+    echo "does exist"
+    pageExists=true
   fi
-  echo "does exist"
-  echo $rawResult
-  pageExists=true
 }
 
 for fileToProtect in $filesToProtect; do
