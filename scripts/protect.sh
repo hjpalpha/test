@@ -125,8 +125,6 @@ protectPage() {
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2 against creation"
     protectErrors+=("$1 on $2")
-    #protectErrors=(${protectErrors[@]} ("$1 on $2"))
-    echo "${protectErrors}"
   fi
 }
 
@@ -217,7 +215,9 @@ fi
 if [[ ${#protectErrors[@]} -ne 0 ]]; then
   echo "::warning::Some modules could not be protected"
   echo "::group::Failed protections"
-  echo $protectErrors
+  for value in "${protectErrors[@]}"; do
+     echo "... $value"
+  done
   echo "::endgroup::"
 fi
 
