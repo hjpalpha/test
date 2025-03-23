@@ -59,7 +59,7 @@ fetchAllWikis() {
 }
 
 hasNoLocalVersion() {
-  if [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]]; then
+  if [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
     return false
   fi
   return true
