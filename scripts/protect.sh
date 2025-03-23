@@ -36,7 +36,6 @@ fi
 luaFiles=$(find lua -type f -name '*/wikis/*.lua')
 
 fetchAllWikis() {
-  echo "...here3"
   allWikis=$(
     curl \
       -s \
@@ -48,13 +47,17 @@ fetchAllWikis() {
       | gunzip \
       | jq '.allwikis | keys[]' -r
   )
-  echo $allWikis
+  allWikis=("dota2" "starcraft2" "commons") # for testing ...
   # Don't get rate limited
   sleep 4
 
 }
 
 hasNoLocalVersion() {
+  if [[ $2 == "commons" ]]; then
+    return 0
+  fi
+
   if [[ $luaFiles == *"lua/wikis/${2}/${1}.lua"* ]] || [[ $filesToProtect == *"lua/wikis/${2}/${1}.lua"* ]]; then
     return 0
   fi
@@ -185,7 +188,7 @@ for fileToProtect in $filesToProtect; do
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
 
-    if [[ "commons" -ne $wiki ]]; then
+    if [[ "commons" != $wiki ]]; then
       # if the file is on a wiki only protect on the wiki
       # for wiki setups only apply if $wiki matches the wiki we are setting up
       if [[ -n ${WIKI_TO_PROTECT} ]] || [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
@@ -193,16 +196,12 @@ for fileToProtect in $filesToProtect; do
       fi
     else # commons case
       protectExistingPage $module $wiki
-      echo "...here1"
-      echo "...${allWikis}"
       if [[ -z "$allWikis" ]] || [[ ${#allWikis[@]} -ne 0 ]]; then
-        echo "...here2"
         fetchAllWikis
       fi
-      echo "...${allWikis}"
       for deployWiki in $allWikis; do
-        echo "...protecting against creation on ${deployWiki}"
         if hasNoLocalVersion $module $deployWiki; then
+          echo "...protecting ${module} against creation on ${deployWiki}"
           if pageExists $module $deployWiki; then
             echo "::warning::$fileToProtect already exists on $deployWiki"
             protectErrors+=("$fileToProtect on $deployWiki")
