@@ -7,7 +7,7 @@ declare -A allWikis
 declare -A regexErrors
 declare -A protectErrors
 
-regex="lua/wikis/([a-z]+)/(.*)\.lua"
+regex="^\.?/?lua/wikis/([a-z0-9]+)/(.*)\.lua$"
 
 rawCreatedFiles=$1
 rawMovedFiles=$2
