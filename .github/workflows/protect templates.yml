@@ -1,4 +1,4 @@
-name: Protect newly set up wiki
+name: Protect templates
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
 jobs:
   protect:
     if: github.ref_name == github.event.repository.default_branch
-    name: Protect newly set up wiki
+    name: Protect templates
     runs-on: ubuntu-latest
 
     steps:
