@@ -7,14 +7,6 @@ declare -a protectErrors=()
 
 readarray filesToProtect < "./templates/templatesToProtect"
 
-echo "====="
-for value in "${filesToProtect[@]}"; do
-	echo "... ${value}"
-done
-echo "====="
-
-exit 1
-
 protectPage() {
   page=$1
   wiki=$2
@@ -106,7 +98,7 @@ protectNonExistingPage() {
 }
 
 checkIfPageExists() {
-  page="Template:${1}"
+  page="${1}"
   wikiApiUrl="${WIKI_BASE_URL}/${2}/api.php"
   rawResult=$(
     curl \
@@ -133,6 +125,7 @@ checkIfPageExists() {
 
 for fileToProtect in $filesToProtect; do
   echo "::group::Trying to protect for $fileToProtect"
+  template="Template:${fileToProtect}"
   if [[ "commons" == ${WIKI_TO_PROTECT} ]]; then
     protectExistingPage $template ${WIKI_TO_PROTECT}
   else
