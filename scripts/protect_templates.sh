@@ -123,7 +123,7 @@ checkIfPageExists() {
   fi
 }
 
-for fileToProtect in $filesToProtect; do
+for fileToProtect in "${filesToProtect[@]}"; do
   echo "::group::Trying to protect for $fileToProtect"
   template="Template:${fileToProtect}"
   if [[ "commons" == ${WIKI_TO_PROTECT} ]]; then
