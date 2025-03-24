@@ -212,7 +212,7 @@ done
 if [[ ${#regexErrors[@]} -ne 0 ]]; then
   echo "::warning::Some regexes failed"
   echo ":warning: Some regexes failed" >> $GITHUB_STEP_SUMMARY
-  echo "::group::Failed protections"
+  echo "::group::Files the regex failed on"
   for value in "${regexErrors[@]}"; do
      echo "... ${failedRegex}"
   done
