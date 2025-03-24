@@ -125,6 +125,7 @@ protectPage() {
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2"
     protectErrorMsg="${protectMode}:${wiki}:${page}"
+    echo "${protectErrorMsg}"
     protectErrors+=("${protectErrorMsg}")
   fi
 }
