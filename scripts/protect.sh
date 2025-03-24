@@ -48,9 +48,10 @@ checkForLocalVersion() {
 }
 
 protectPage() {
-  protectOptions=$3
-  wiki=$2
   page="Module:${1}"
+  wiki=$2
+  protectOptions=$3
+  protectMode=$4
   echo "...wiki = $wiki"
   echo "...page = $page"
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
@@ -120,10 +121,10 @@ protectPage() {
   # Don't get rate limited
   sleep 4
 
-  result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${4}" -r)
+  result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${protectMode}" -r)
   if [[ $result != *"allow-only-sysop"* ]]; then
     echo "::warning::could not protect $1 on $2"
-    protectErrorMsg="${wiki}:${page}"
+    protectErrorMsg="${protectMode}:${wiki}:${page}"
     protectErrors+=("${protectErrorMsg}")
   fi
 }
