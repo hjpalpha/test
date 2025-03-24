@@ -211,14 +211,17 @@ done
 
 if [[ ${#regexErrors[@]} -ne 0 ]]; then
   echo "::warning::Some regexes failed"
-  for failedRegex in $regexErrors; do
-    echo "::warning failed regex:: ${failedRegex}"
-    echo ":warning: ${failedRegex} failed regex" >> $GITHUB_STEP_SUMMARY
+  echo ":warning: Some regexes failed" >> $GITHUB_STEP_SUMMARY
+  echo "::group::Failed protections"
+  for value in "${regexErrors[@]}"; do
+     echo "... ${failedRegex}"
   done
+  echo "::endgroup::"
 fi
 
 if [[ ${#protectErrors[@]} -ne 0 ]]; then
   echo "::warning::Some modules could not be protected"
+  echo ":warning: Some modules could not be protected" >> $GITHUB_STEP_SUMMARY
   echo "::group::Failed protections"
   for value in "${protectErrors[@]}"; do
      echo "... ${value}"
