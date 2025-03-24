@@ -8,12 +8,12 @@ declare -a protectErrors=()
 readarray filesToProtect < "./templates/templatesToProtect"
 
 protectPage() {
-  page=$1
+  page="${1}"
   wiki=$2
   protectOptions=$3
   protectMode=$4
   echo "...wiki = $wiki"
-  echo "...page = $page"
+  echo "...page = ${page}"
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
@@ -83,18 +83,18 @@ protectPage() {
 
   result=$(echo "$rawProtectResult" | jq ".protect.protections.[].${protectMode}" -r)
   if [[ $result != *"allow-only-sysop"* ]]; then
-    echo "::warning::could not (${protectMode}) protect $1 on $2"
+    echo "::warning::could not (${protectMode}) protect ${page} on ${wiki}"
     protectErrorMsg="${protectMode}:${wiki}:${page}"
     protectErrors+=("${protectErrorMsg}")
   fi
 }
 
 protectExistingPage() {
-  protectPage $1 $2 "edit=allow-only-sysop|move=allow-only-sysop" "edit"
+  protectPage "${1}" "${2}" "edit=allow-only-sysop|move=allow-only-sysop" "edit"
 }
 
 protectNonExistingPage() {
-  protectPage $1 $2 "create=allow-only-sysop" "create"
+  protectPage "${1}" "${2}" "create=allow-only-sysop" "create"
 }
 
 checkIfPageExists() {
@@ -129,12 +129,12 @@ for fileToProtect in "${filesToProtect[@]}"; do
   if [[ "commons" == ${WIKI_TO_PROTECT} ]]; then
     protectExistingPage $template ${WIKI_TO_PROTECT}
   else
-    checkIfPageExists $template $deployWiki
+    checkIfPageExists "${template}" $deployWiki
     if $pageExists; then
       echo "::warning::$fileToProtect already exists on $deployWiki"
       protectErrors+=("create:${WIKI_TO_PROTECT}:${fileToProtect}")
     else
-      protectNonExistingPage $template ${WIKI_TO_PROTECT}
+      protectNonExistingPage "${template}" ${WIKI_TO_PROTECT}
     fi
   fi
   echo '::endgroup::'
