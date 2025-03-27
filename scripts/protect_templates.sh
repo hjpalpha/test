@@ -2,6 +2,8 @@
 
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
+. /scripts/util.sh
+
 declare -A loggedin
 declare -a protectErrors=()
 
@@ -17,51 +19,7 @@ protectPage() {
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
-  if [[ ${loggedin[${wiki}]} != 1 ]]; then
-    # Login
-    echo "...logging in on \"${wiki}\""
-    loginToken=$(
-      curl \
-        -s \
-        -b "$ckf" \
-        -c "$ckf" \
-        -d "format=json&action=query&meta=tokens&type=login" \
-        -H "User-Agent: ${userAgent}" \
-        -H 'Accept-Encoding: gzip' \
-        -X POST "$wikiApiUrl" \
-        | gunzip \
-        | jq ".query.tokens.logintoken" -r
-    )
-    curl \
-      -s \
-      -b "$ckf" \
-      -c "$ckf" \
-      --data-urlencode "lgname=${WIKI_USER}" \
-      --data-urlencode "lgpassword=${WIKI_PASSWORD}" \
-      --data-urlencode "lgtoken=${loginToken}" \
-      -H "User-Agent: ${userAgent}" \
-      -H 'Accept-Encoding: gzip' \
-      -X POST "${wikiApiUrl}?format=json&action=login" \
-      | gunzip \
-      > /dev/null
-    loggedin[$wiki]=1
-    # Don't get rate limited
-    sleep 4
-  fi
-
-  # Protect Page
-  protectToken=$(
-    curl \
-      -s \
-      -b "$ckf" \
-      -c "$ckf" \
-      -d "format=json&action=query&meta=tokens" \
-      -H "User-Agent: ${userAgent}" \
-      -H 'Accept-Encoding: gzip' \
-      -X POST "$wikiApiUrl" \
-      | gunzip \
-      | jq ".query.tokens.csrftoken" -r
-  )
+  editOrProtectToken=$(loginAndGetToken $wiki)
   rawProtectResult=$(
     curl \
       -s \
@@ -72,7 +30,7 @@ protectPage() {
       --data-urlencode "reason=Git maintained" \
       --data-urlencode "expiry=infinite" \
       --data-urlencode "bot=true" \
-      --data-urlencode "token=${protectToken}" \
+      --data-urlencode "token=${editOrProtectToken}" \
       -H "User-Agent: ${userAgent}" \
       -H 'Accept-Encoding: gzip' \
       -X POST "${wikiApiUrl}?format=json&action=protect" \
