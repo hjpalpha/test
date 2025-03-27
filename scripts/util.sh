@@ -61,8 +61,6 @@ getToken(){
       | gunzip \
       | jq ".query.tokens.csrftoken" -r
   )
-
-  echo $token
 }
 
 protectPage() {
@@ -75,8 +73,10 @@ protectPage() {
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
-  protectToken=$( getToken $wiki )
+  #protectToken=$( getToken $wiki )
   #echo "...token: ${protectToken}"
+
+  getToken $wiki
 
   rawProtectResult=$(
     curl \
@@ -88,7 +88,7 @@ protectPage() {
       --data-urlencode "reason=Git maintained" \
       --data-urlencode "expiry=infinite" \
       --data-urlencode "bot=true" \
-      --data-urlencode "token=${protectToken}" \
+      --data-urlencode "token=${token}" \
       -H "User-Agent: ${userAgent}" \
       -H 'Accept-Encoding: gzip' \
       -X POST "${wikiApiUrl}?format=json&action=protect" \
