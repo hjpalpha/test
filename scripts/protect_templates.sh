@@ -2,8 +2,6 @@
 
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
-declare -a protectErrors=()
-
 . ./util.sh
 
 readarray filesToProtect < "./templates/templatesToProtect"
@@ -17,6 +15,7 @@ for fileToProtect in "${filesToProtect[@]}"; do
     protectNonExistingPage "${template}" ${WIKI_TO_PROTECT}
   fi
   echo '::endgroup::'
+  exit 1
 done
 
 rm -f cookie_*
