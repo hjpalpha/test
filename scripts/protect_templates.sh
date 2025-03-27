@@ -20,6 +20,7 @@ protectPage() {
   ckf="cookie_${wiki}.ck"
 
   editOrProtectToken=$(loginAndGetToken $wiki)
+  echo "... ${editOrProtectToken}"
   rawProtectResult=$(
     curl \
       -s \
