@@ -2,7 +2,7 @@
 
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
-. ./util.sh
+. ./scripts/util.sh
 
 readarray filesToProtect < "./templates/templatesToProtect"
 
