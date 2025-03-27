@@ -73,9 +73,6 @@ protectPage() {
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
-  #protectToken=$( getToken $wiki )
-  #echo "...token: ${protectToken}"
-
   getToken $wiki
 
   rawProtectResult=$(
