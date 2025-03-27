@@ -3,6 +3,7 @@
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -A loggedin
+declare -a protectErrors=()
 
 login() {
   wiki=$1
