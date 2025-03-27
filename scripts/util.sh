@@ -105,7 +105,8 @@ protectPage() {
 
 checkIfPageExists() {
   page="${1}"
-  wikiApiUrl="${WIKI_BASE_URL}/${2}/api.php"
+  wiki="${2}"
+  wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
   rawResult=$(
@@ -137,8 +138,8 @@ protectNonExistingPage() {
 
   checkIfPageExists "${page}" $wiki
   if $pageExists; then
-    echo "::warning::$fileToProtect already exists on $wiki"
-    protectErrors+=("create:${WIKI_TO_PROTECT}:${fileToProtect}")
+    echo "::warning::$page already exists on $wiki"
+    protectErrors+=("create:${WIKI_TO_PROTECT}:${page}")
   else
     protectPage "${page}" "${wiki}" "create=allow-only-sysop" "create"
   fi
