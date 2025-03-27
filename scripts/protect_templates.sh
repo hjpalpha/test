@@ -2,7 +2,7 @@
 
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
-. /scripts/util.sh
+. /util.sh
 
 declare -A loggedin
 declare -a protectErrors=()
