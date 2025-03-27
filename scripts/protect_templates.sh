@@ -15,7 +15,6 @@ for fileToProtect in "${filesToProtect[@]}"; do
     protectNonExistingPage "${template}" ${WIKI_TO_PROTECT}
   fi
   echo '::endgroup::'
-  exit 1
 done
 
 rm -f cookie_*
