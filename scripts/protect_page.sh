@@ -58,6 +58,9 @@ protectPage() {
   fi
 }
 
+# checks if a specified page on a specified wiki exists
+# $1 -> page (inkl namespace prefix
+# $2 -> wiki
 checkIfPageExists() {
   page="${1}"
   wiki="${2}"
