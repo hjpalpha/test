@@ -4,6 +4,8 @@ userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -A loggedin
 
+# logs into a specified wiki
+# $1 -> the wiki to log into
 login() {
   wiki=$1
 
@@ -41,6 +43,9 @@ login() {
   fi
 }
 
+# gets an edit/protect token for a specified wiki
+# if not already logged in on the wiki also logs in on the wiki
+# $1 -> the wiki to get the token for
 getToken(){
   wiki=$1
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
