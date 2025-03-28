@@ -34,6 +34,9 @@ allWikis=$(
 # Don't get rate limited
 sleep 4
 
+# checks if for a specified (commons) module there exists a local version of said module on the specified wiki in the git repo
+# $1 -> module (without namespace prefix)
+# $2 -> wiki
 checkForLocalVersion() {
   if [[ $2 == "commons" ]]; then
     hasNoLocalVersion=false
@@ -44,6 +47,9 @@ checkForLocalVersion() {
   fi
 }
 
+# protects a module against creation if it has no local version according to git
+# $1 -> module (without namespace prefix)
+# $2 -> wiki
 protectIfHasNoLocalVersion() {
   module="${1}"
   page="Module:${module}"
