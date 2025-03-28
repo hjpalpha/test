@@ -46,10 +46,11 @@ checkForLocalVersion() {
 
 protectIfHasNoLocalVersion() {
   module="${1}"
+  page="Module:${module}"
   wiki="${2}"
   checkForLocalVersion $module $wiki
   if $hasNoLocalVersion; then
-    protectNonExistingPage $module $wiki
+    protectNonExistingPage $page $wiki
   fi
 }
 
@@ -58,17 +59,18 @@ for fileToProtect in $filesToProtect; do
   if [[ $fileToProtect =~ $regex ]]; then
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
+    page="Module:${module}"
 
     if [[ -n ${WIKI_TO_PROTECT} ]]; then
       if [[ $wiki == ${WIKI_TO_PROTECT} ]]; then
-        protectExistingPage $module ${WIKI_TO_PROTECT}
+        protectExistingPage $page ${WIKI_TO_PROTECT}
       elif [[ $wiki == "commons" ]]; then
         protectIfHasNoLocalVersion $module ${WIKI_TO_PROTECT}
       fi
     elif [[ "commons" != $wiki ]]; then
-      protectExistingPage $module $wiki
+      protectExistingPage $page $wiki
     else # commons case
-      protectExistingPage $module $wiki
+      protectExistingPage $page $wiki
 
       for deployWiki in $allWikis; do
         protectIfHasNoLocalVersion $module $deployWiki
