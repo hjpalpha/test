@@ -7,7 +7,7 @@ userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 declare -a protectErrors=()
 
 # protects a specified page on a specified wiki with the specified protect mode
-# $1 -> page (inkl namespace prefix
+# $1 -> page (inkl namespace prefix)
 # $2 -> wiki
 # $3 -> protect mode ('edit' || 'create')
 protectPage() {
@@ -59,7 +59,7 @@ protectPage() {
 }
 
 # checks if a specified page on a specified wiki exists
-# $1 -> page (inkl namespace prefix
+# $1 -> page (inkl namespace prefix)
 # $2 -> wiki
 checkIfPageExists() {
   page="${1}"
@@ -92,7 +92,7 @@ checkIfPageExists() {
 
 # protects a specified page on a specified wiki against creation
 # if the page already exists it will issue a warning
-# $1 -> page (inkl namespace prefix
+# $1 -> page (inkl namespace prefix)
 # $2 -> wiki
 protectNonExistingPage() {
   page="${1}"
@@ -108,7 +108,7 @@ protectNonExistingPage() {
 }
 
 # protects a specified page on a specified wiki against editing/moving
-# $1 -> page (inkl namespace prefix
+# $1 -> page (inkl namespace prefix)
 # $2 -> wiki
 protectExistingPage() {
   protectPage "${1}" "${2}" "edit"
