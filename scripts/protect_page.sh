@@ -2,7 +2,7 @@
 
 userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
-. ./scripts/loginAndToken.sh
+. ./scripts/login_and_get_token.sh
 
 declare -a protectErrors=()
 
