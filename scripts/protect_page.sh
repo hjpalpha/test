@@ -6,11 +6,24 @@ userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 
 declare -a protectErrors=()
 
+# protects a specified page on a specified wiki with the specified protect mode
+# $1 -> page (inkl namespace prefix
+# $2 -> wiki
+# $3 -> protect mode ('edit' || 'create')
 protectPage() {
   page="${1}"
   wiki=$2
-  protectOptions=$3
-  protectMode=$4
+  protectMode=$3
+
+  if [[ ${protectMode} == 'edit' ]]; then
+    protectOptions="edit=allow-only-sysop|move=allow-only-sysop"
+  elif [[ ${protectMode} == 'create' ]]; then
+    protectOptions="create=allow-only-sysop"
+  else
+    echo "::warning:: invalid protect mode: ${protectMode}"
+    exit 1
+  fi
+
   echo "...wiki = $wiki"
   echo "...page = ${page}"
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
@@ -74,6 +87,10 @@ checkIfPageExists() {
   fi
 }
 
+# protects a specified page on a specified wiki against creation
+# if the page already exists it will issue a warning
+# $1 -> page (inkl namespace prefix
+# $2 -> wiki
 protectNonExistingPage() {
   page="${1}"
   wiki=$2
@@ -83,10 +100,13 @@ protectNonExistingPage() {
     echo "::warning::$page already exists on $wiki"
     protectErrors+=("create:${WIKI_TO_PROTECT}:${page}")
   else
-    protectPage "${page}" "${wiki}" "create=allow-only-sysop" "create"
+    protectPage "${page}" "${wiki}" "create"
   fi
 }
 
+# protects a specified page on a specified wiki against editing/moving
+# $1 -> page (inkl namespace prefix
+# $2 -> wiki
 protectExistingPage() {
-  protectPage "${1}" "${2}" "edit=allow-only-sysop|move=allow-only-sysop" "edit"
+  protectPage "${1}" "${2}" "edit"
 }
