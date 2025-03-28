@@ -85,7 +85,6 @@ protectNonExistingPage() {
   else
     protectPage "${page}" "${wiki}" "create=allow-only-sysop" "create"
   fi
-
 }
 
 protectExistingPage() {
