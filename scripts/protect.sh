@@ -61,7 +61,7 @@ protectIfHasNoLocalVersion() {
 }
 
 for fileToProtect in $filesToProtect; do
-  echo "::group::Trying to protect for $fileToProtect"
+  echo "::group::Checking $fileToProtect"
   if [[ $fileToProtect =~ $regex ]]; then
     wiki=${BASH_REMATCH[1]}
     module=${BASH_REMATCH[2]}
@@ -114,4 +114,3 @@ rm -f cookie_*
 if [[ ${#protectErrors[@]} -ne 0 ]] || [[ ${#regexErrors[@]} -ne 0 ]]; then
   exit 1
 fi
-
