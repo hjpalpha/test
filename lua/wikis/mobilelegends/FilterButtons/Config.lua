@@ -1,6 +1,6 @@
 ---
 -- @Liquipedia
--- wiki=hearthstone
+-- wiki=mobilelegends
 -- page=Module:FilterButtons/Config
 --
 -- Please see https://github.com/Liquipedia/Lua-Modules to contribute
@@ -9,7 +9,6 @@
 local Tier = require('Module:Tier/Utils')
 local Config = {}
 
----@type FilterButtonCategory[]
 Config.categories = {
 	{
 		name = 'liquipediatier',
@@ -20,7 +19,7 @@ Config.categories = {
 				table.insert(category.items, tier.value)
 			end
 		end,
-		defaultItems = {'1', '2', '3', '4'},
+		defaultItems = {'1', '2', '3'},
 		transform = function(tier)
 			return Tier.toName(tier)
 		end,
