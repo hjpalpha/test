@@ -92,7 +92,7 @@ searchAndRemove(){
 }
 
 for wiki in $allWikis; do
-  if [[ $wiki != "commons" || ${INCLUDE_COMMONS} == true ]]; then
+  if [[ $wiki == "starcraft2" ]]; then
     echo "::group::Checking $wiki"
     searchAndRemove $wiki
   fi
