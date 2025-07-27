@@ -39,7 +39,6 @@ removePage() {
       -c "$ckf" \
       --data-urlencode "title=${page}" \
       --data-urlencode "reason=Remove ${LUA_DEV_ENV_NAME}" \
-      --data-urlencode "bot=true" \
       --data-urlencode "token=${token}" \
       -H "User-Agent: ${userAgent}" \
       -H 'Accept-Encoding: gzip' \
@@ -92,6 +91,8 @@ searchAndRemove(){
     done
   fi
 }
+
+removePage "tttttsssstttt" "commons"
 
 for wiki in $allWikis; do
   if [[ $wiki != "commons" || ${INCLUDE_COMMONS} == true ]]; then
