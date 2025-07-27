@@ -83,8 +83,7 @@ searchAndRemove(){
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in ${pages[@]}; do
-      echo "::warnings::settings: ${INCLUDE_SUB_ENVS}"
-      if [[ ${INCLUDE_SUB_ENVS} == true || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
+      if [[ ${INCLUDE_SUB_ENVS} || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
         removePage $page $wiki
       fi
     done
@@ -92,7 +91,7 @@ searchAndRemove(){
 }
 
 for wiki in $allWikis; do
-  if [[ $wiki == "starcraft2" ]]; then
+  if [[ $wiki != "commons" || ${INCLUDE_COMMONS} == true ]]; then
     echo "::group::Checking $wiki"
     searchAndRemove $wiki
   fi
