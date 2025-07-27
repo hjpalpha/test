@@ -67,7 +67,7 @@ searchAndRemove(){
       -c "$ckf" \
       --data-urlencode "title=${page}" \
       --data-urlencode "list=search" \
-      --data-urlencode "srsearch=intitle/${LUA_DEV_ENV_NAME}" \
+      --data-urlencode "srsearch=intitle:${LUA_DEV_ENV_NAME}" \
       --data-urlencode "srnamespace=828" \
       --data-urlencode "srlimit=500" \
       --data-urlencode "srprop=" \
