@@ -80,7 +80,7 @@ searchAndRemove(){
 
   sleep 4
 
-  pages=$(echo "$rawSearchResult" | jq ".query.search.[]" -r)
+  pages=$(echo "$rawSearchResult" | jq ".query.search[] | []" -r)
   echo "::warning::${pages}"
   echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
