@@ -16,8 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: tst
-        run: ls scripts
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Remove Lua Dev Env Modules
         env:
