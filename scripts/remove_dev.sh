@@ -84,11 +84,11 @@ searchAndRemove(){
   echo "::warning::${pages}"
   echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
-  for pageInfo in $pages do
-    page=$(echo "$pageInfo" | jq ".title" -r)
+  #for pageInfo in $pages do
+    #page=$(echo "$pageInfo" | jq ".title" -r)
 
-    removePage $page $wiki
-  done
+    #removePage $page $wiki
+  #done
 }
 
 for wiki in $allWikis; do
