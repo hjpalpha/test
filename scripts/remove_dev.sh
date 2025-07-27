@@ -79,7 +79,7 @@ searchAndRemove(){
 
   sleep 4
 
-  pages=($(echo "$rawSearchResult" | jq ".query.search.[].title" -r))
+  pages=($(echo "$rawSearchResult" | jq ".query.search.[]" -r))
   echo "::warning::${pages}"
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
