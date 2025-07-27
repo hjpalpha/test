@@ -84,7 +84,7 @@ searchAndRemove(){
   echo "::warning::${pages}"
   echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
-  if [[ ${#pages[@]} -ne 0 ]]; then
+  #if [[ ${#pages[@]} -ne 0 ]]; then
     #for pageInfo in $pages do
       #page=$(echo "$pageInfo" | jq ".title" -r)
       #echo "::warning::${page}"
@@ -92,7 +92,7 @@ searchAndRemove(){
 
       #removePage $page $wiki
     #done
-  fi
+  #fi
 }
 
 for wiki in $allWikis; do
