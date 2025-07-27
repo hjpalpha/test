@@ -9,7 +9,6 @@ on:
       includecommons:
         description: 'Include Commons'
         type: boolean
-        required: true
 
 jobs:
   deploy:
