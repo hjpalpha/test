@@ -92,8 +92,6 @@ searchAndRemove(){
   fi
 }
 
-removePage "tttttsssstttt" "commons"
-
 for wiki in $allWikis; do
   if [[ $wiki != "commons" || ${INCLUDE_COMMONS} == true ]]; then
     echo "::group::Checking $wiki"
