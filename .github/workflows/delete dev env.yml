@@ -11,7 +11,7 @@ on:
         type: boolean
 
 jobs:
-  deploy:
+  removedev:
     name: Remove Dev Env
     runs-on: ubuntu-latest
 
