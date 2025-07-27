@@ -82,7 +82,7 @@ searchAndRemove(){
   pages=$(echo "$rawSearchResult" | jq ".query.search" -r)
 
   for pageInfo in $pages do
-    page=$("$pageInfo" | jq ".title" -r)
+    page=$(echo "$pageInfo" | jq ".title" -r)
 
     removePage $page $wiki
   done
