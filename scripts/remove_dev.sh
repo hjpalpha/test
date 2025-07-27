@@ -79,7 +79,7 @@ searchAndRemove(){
 
   sleep 4
 
-  pages=$(echo "$rawSearchResult" | jq ".query.search | []" -r)
+  pages=$(echo "$rawSearchResult" | jq ".query.search.[]" -r)
 
   for pageInfo in $pages do
     page=$(echo "$pageInfo" | jq ".title" -r)
