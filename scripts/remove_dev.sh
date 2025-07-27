@@ -48,8 +48,6 @@ removePage() {
   # Don't get rate limited
   sleep 8
 
-  echo "::warning::$rawRemoveResult"
-
   if [[ $rawRemoveResult != *"delete"* ]]; then
     echo "::warning::could not delete ${page} on ${wiki}"
     echo "::warning::could not delete ${page} on ${wiki}" >> $GITHUB_STEP_SUMMARY
