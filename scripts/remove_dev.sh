@@ -5,6 +5,7 @@ userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
 . ./scripts/login_and_get_token.sh
 
 ckf="cookie_base.ck"
+declare -a removeErrors
 declare -a allWikis
 allWikis=$(
   curl \
@@ -80,14 +81,18 @@ searchAndRemove(){
   sleep 4
 
   pages=$(echo "$rawSearchResult" | jq ".query.search.[]" -r)
+  echo "::warning::${pages}"
+  echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
-  for pageInfo in $pages do
-    page=$(echo "$pageInfo" | jq ".title" -r)
-    echo "::warning::${page}"
-    echo "::warning::${page}" >> $GITHUB_STEP_SUMMARY
+  if [[ ${#pages[@]} -ne 0 ]]; then
+    for pageInfo in $pages do
+      page=$(echo "$pageInfo" | jq ".title" -r)
+      echo "::warning::${page}"
+      echo "::warning::${page}" >> $GITHUB_STEP_SUMMARY
 
-    #removePage $page $wiki
-  done
+      #removePage $page $wiki
+    done
+  fi
 }
 
 for wiki in $allWikis; do
