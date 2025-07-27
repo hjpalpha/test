@@ -84,13 +84,15 @@ searchAndRemove(){
   pages=$(echo "$rawSearchResult" | jq ".query.search.[]" -r)
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
-    for pageInfo in $pages do
-      page=$(echo "$pageInfo" | jq ".title" -r)
-      echo "::warning::${page}"
-      echo "::warning::${page}" >> $GITHUB_STEP_SUMMARY
+    echo "::warning::${pages}"
+    echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
+    #for pageInfo in $pages do
+      #page=$(echo "$pageInfo" | jq ".title" -r)
+      #echo "::warning::${page}"
+      #echo "::warning::${page}" >> $GITHUB_STEP_SUMMARY
 
       #removePage $page $wiki
-    done
+    #done
   fi
 }
 
