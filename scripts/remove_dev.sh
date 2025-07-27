@@ -25,8 +25,8 @@ removePage() {
   page="${1}"
   wiki=$2
 
-  echo "...wiki = $wiki"
-  echo "...page = ${page}"
+  echo "deleting ${wiki}:${page}"
+
   wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
   ckf="cookie_${wiki}.ck"
 
@@ -49,8 +49,11 @@ removePage() {
   # Don't get rate limited
   sleep 8
 
+  echo "::warning::$rawRemoveResult"
+
   if [[ $rawRemoveResult != *"delete"* ]]; then
     echo "::warning::could not delete ${page} on ${wiki}"
+    echo "::warning::could not delete ${page} on ${wiki}" >> $GITHUB_STEP_SUMMARY
     removeErrorMsg="${wiki}:${page}"
     removeErrors+=("${removeErrorMsg}")
   fi
@@ -80,15 +83,11 @@ searchAndRemove(){
   sleep 4
 
   pages=($(echo "$rawSearchResult" | jq ".query.search[] | .title" -r -c))
-  echo "::warning::${pages}"
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in ${pages[@]}; do
-      echo "::warning::${wiki}:${page}"
-
       if [[ ${INCLUDE_SUB_ENVS} || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
-        echo "true:${wiki}:${page}"
-        #removePage $page $wiki
+        removePage $page $wiki
       fi
     done
   fi
