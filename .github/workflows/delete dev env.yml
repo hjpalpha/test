@@ -10,7 +10,7 @@ on:
         description: 'Include Commons'
         type: boolean
       includesubenvs:
-        description: 'Include sub dev envs (e.g. hjp2 included in hjp)'
+        description: 'Include sub envs (e.g. hjp includes in hjp2)'
         type: boolean
 
 jobs:
