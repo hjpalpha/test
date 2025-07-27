@@ -81,6 +81,9 @@ searchAndRemove(){
 
   pages=$(echo "$rawSearchResult" | jq ".query.search" -r)
 
+  echo "::warning::${pages}"
+  echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
+
   for pageInfo in $pages do
     page=$(echo "$pageInfo" | jq ".title" -r)
 
