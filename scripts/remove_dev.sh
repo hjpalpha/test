@@ -66,7 +66,6 @@ searchAndRemove(){
       -s \
       -b "$ckf" \
       -c "$ckf" \
-      --data-urlencode "title=${page}" \
       --data-urlencode "list=search" \
       --data-urlencode "srsearch=intitle:${LUA_DEV_ENV_NAME}" \
       --data-urlencode "srnamespace=828" \
@@ -82,7 +81,7 @@ searchAndRemove(){
 
   echo "::warning::${rawSearchResult}"
   echo "::warning::${rawSearchResult}" >> $GITHUB_STEP_SUMMARY
-  pages=$(echo "$rawSearchResult" | jq ".query.search.[] | []" -r)
+  pages=$(echo "$rawSearchResult" | jq ".query.search" -r)
   echo "::warning::${pages}"
   echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
