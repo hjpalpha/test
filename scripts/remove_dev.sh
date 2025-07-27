@@ -58,6 +58,8 @@ removePage() {
 searchAndRemove(){
   wiki=$1
 
+  wikiApiUrl="${WIKI_BASE_URL}/${wiki}/api.php"
+
   rawSearchResult=$(
     curl \
       -s \
