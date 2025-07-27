@@ -83,7 +83,8 @@ searchAndRemove(){
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in ${pages[@]}; do
-      if [[ ${INCLUDE_SUB_ENVS} || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
+      echo "::warnings::settings: ${INCLUDE_SUB_ENVS}"
+      if [[ ${INCLUDE_SUB_ENVS} == true || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
         removePage $page $wiki
       fi
     done
