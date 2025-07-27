@@ -79,14 +79,12 @@ searchAndRemove(){
 
   sleep 4
 
-  pages=($(echo "$rawSearchResult" | jq ".query.search[].title" -r))
+  pages=($(echo "$rawSearchResult" | jq ".query.search.[].title" -r))
   echo "::warning::${pages}"
-  echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in $pages; do
       echo "::warning::${wiki}:${page}"
-      echo "::warning::${wiki}:${page}" >> $GITHUB_STEP_SUMMARY
       echo "${wiki}:${page}"
 
       if [[ ${INCLUDE_SUB_ENVS} || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
