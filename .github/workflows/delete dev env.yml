@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: tst
-        run: bash "ls scripts"
+        run: ls scripts
 
       - name: Remove Lua Dev Env Modules
         env:
