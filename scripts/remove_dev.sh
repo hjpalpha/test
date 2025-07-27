@@ -79,14 +79,12 @@ searchAndRemove(){
 
   sleep 4
 
-  pages=($(echo "$rawSearchResult" | jq ".query.search[] | [].title" -r -c))
+  pages=($(echo "$rawSearchResult" | jq ".query.search[] | .title" -r -c))
   echo "::warning::${pages}"
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
-    for pageInfo in $pages; do
-      echo "::warning::${wiki}:${pageInfo}"
-      page==$pageInfo
-      #page=$(echo "$pageInfo" | jq ".title")
+    for page in ${pages[@]}; do
+      echo "::warning::${wiki}:${page}"
 
       if [[ ${INCLUDE_SUB_ENVS} || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
         echo "true:${wiki}:${page}"
