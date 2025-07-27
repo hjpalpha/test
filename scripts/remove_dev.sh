@@ -81,7 +81,7 @@ searchAndRemove(){
 
   echo "::warning::${rawSearchResult}"
   echo "::warning::${rawSearchResult}" >> $GITHUB_STEP_SUMMARY
-  pages=$(echo "$rawSearchResult" | jq ".query.search" -r)
+  pages=$(echo "$rawSearchResult" | jq ".query.search | keys[]" -r)
   echo "::warning::${pages}"
   echo "::warning::${pages}" >> $GITHUB_STEP_SUMMARY
 
