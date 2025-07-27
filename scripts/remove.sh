@@ -46,7 +46,7 @@ removePage() {
       | gunzip
   )
   # Don't get rate limited
-  sleep 4
+  sleep 8
 
   if [[ $rawRemoveResult != *"delete"* ]]; then
     echo "::warning::could not delete ${page} on ${wiki}"
@@ -74,6 +74,8 @@ searchAndRemove(){
       -X POST "${wikiApiUrl}?format=json&action=query" \
       | gunzip
   )
+
+  sleep 4
 
   pages=$(echo "$rawSearchResult" | jq ".query.search" -r)
 
