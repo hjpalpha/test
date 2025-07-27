@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: tst
+        run: bash "ls scripts"
+
       - name: Remove Lua Dev Env Modules
         env:
           WIKI_USER: ${{ secrets.LP_BOTUSER }}
