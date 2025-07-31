@@ -83,8 +83,11 @@ searchAndRemove(){
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in ${pages[@]}; do
+      echo "${page}"
       if [[ "${page}" == "*/dev" ]]; then
-        removePage $page $wiki
+        echo "${page}"
+        #removePage $page $wiki
+        
       fi
     done
   fi
