@@ -1,6 +1,6 @@
 #!/bin/bash
 
-userAgent="GitHub Autodeploy Bot/1.1.0 (${WIKI_UA_EMAIL})"
+userAgent="GitHub Autodeploy Test Bot/1.1.0 (hjpalpha)"
 
 . ./scripts/login_and_get_token.sh
 
@@ -38,7 +38,7 @@ removePage() {
       -b "$ckf" \
       -c "$ckf" \
       --data-urlencode "title=${page}" \
-      --data-urlencode "reason=Remove ${LUA_DEV_ENV_NAME}" \
+      --data-urlencode "reason=Remove old dev" \
       --data-urlencode "token=${token}" \
       -H "User-Agent: ${userAgent}" \
       -H 'Accept-Encoding: gzip' \
@@ -67,7 +67,7 @@ searchAndRemove(){
       -b "$ckf" \
       -c "$ckf" \
       --data-urlencode "list=search" \
-      --data-urlencode "srsearch=intitle:${LUA_DEV_ENV_NAME}" \
+      --data-urlencode "srsearch=intitle:dev" \
       --data-urlencode "srnamespace=828" \
       --data-urlencode "srlimit=500" \
       --data-urlencode "srprop=" \
@@ -83,7 +83,7 @@ searchAndRemove(){
 
   if [[ -n $pages && ${#pages[@]} -ne 0 ]]; then
     for page in ${pages[@]}; do
-      if [[ ${INCLUDE_SUB_ENVS} == true || "${page}" == "*${LUA_DEV_ENV_NAME}" ]]; then
+      if [[ "${page}" == "*/dev" ]]; then
         removePage $page $wiki
       fi
     done
