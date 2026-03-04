@@ -14,7 +14,7 @@ def main():
         print(f"::group::Checking {wiki}:{PAGE_TO_PROTECT}")
         if wiki == "commons":
             protect_existing_page(PAGE_TO_PROTECT, wiki)
-        else:  # commons case
+        else:
             protect_non_existing_page(PAGE_TO_PROTECT, wiki)
         print("::endgroup::")
     handle_protect_errors()
