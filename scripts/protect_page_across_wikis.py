@@ -9,6 +9,7 @@ from protect_page import (
 
 PAGE_TO_PROTECT = os.getenv("PAGE_TO_PROTECT")
 
+
 def main():
     for wiki in get_wikis():
         print(f"::group::Checking {wiki}:{PAGE_TO_PROTECT}")
