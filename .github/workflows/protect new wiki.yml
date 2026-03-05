@@ -37,7 +37,8 @@ jobs:
         run: python3 ./scripts/protect_templates.py
 
       - name: Lua Protect
-        if: steps.setup.outcome == 'success' && steps.dependencies.outcome == 'success'
+        #if condition is needed this way to ensure it runs even if template protect fails
+        if: always() && steps.setup.outcome == 'success' && steps.dependencies.outcome == 'success'
         env:
           WIKI_USER: ${{ secrets.LP_BOTUSER }}
           WIKI_PASSWORD: ${{ secrets.LP_BOTPASSWORD }}
