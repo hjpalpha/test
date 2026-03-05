@@ -10,7 +10,7 @@ on:
 jobs:
   protect:
     if: github.ref_name == github.event.repository.default_branch
-    name: Protect modules on newly set up wiki
+    name: Protect modules and templates on newly set up wiki
     runs-on: ubuntu-latest
 
     steps:
